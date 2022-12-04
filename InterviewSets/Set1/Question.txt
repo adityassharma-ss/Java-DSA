@@ -1,0 +1,37 @@
+Question 1: There is a big file of words which is dynamically changing. We are continuously adding some words into it. How would you keep track of top 10 trending words at each moment?
+
+Answer:
+
+You usually want a min-heap to keep track of the highest N answers, because at each stage you have a candidate answer and you want to know if it is better than the worst answer in the min-heap - if it is, remove the worst answer of the top N from the min-heap and insert the candidate. Having the - intuitive - max-heap makes it very easy to pick out the very best answer, but when deciding whether to accept a new candidate answer, this is not what you want. (Just remember that when you extract the top N answers at the end, they will come off with the worst of those N first)
+
+HashTable contains keys and values
+keys --> String/word
+values-->reference to an wordCounts
+
+
+class WordCounts
+{
+ public int count=0;
+public void increment()
+{
+count++;
+}
+}
+Max-heap should be built based on count in wordCounts
+
+
+If it's top 10 trending words then you should use a max-heap along with a hash-table.
+
+When a new word is added to the file then:
+
+Create a new element x with x.key=word and x.count=1.
+Add x to the hash-table. O(1).
+Add x to the max-heap. O(lgn).
+When an existing word is added to the file then:
+
+Find x in the hash-table. O(1).
+Update x.count to x.count++.
+When there is a need to retrieve the top 10 trending words then:
+
+Extract 10 times from the max-heap. 10*O(lgn)=O(10*lgn)=O(lgn).
+As you can see, all the needed operations are done in at most O(lgn).
